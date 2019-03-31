@@ -1,0 +1,4 @@
+# Ignore all compilation directories:
+build/
+bin/
+lib/
