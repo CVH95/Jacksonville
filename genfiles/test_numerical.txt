@@ -1,0 +1,47 @@
+TESTING THE MATRIX CLASS
+
+1. Testing determinant:
+
+Matrix[3][3]:
+
+7,1,3
+2,4,1
+1,5,1
+
+Det(M) = 10
+
+2. Testing scalar multiplication:
+
+M · 2 = 
+
+Matrix[3][3]:
+
+14,2,6
+4,8,2
+2,10,2
+
+3. Testing adjoint:
+
+adj(M) = 
+
+Matrix[3][3]:
+
+-1,14,-11
+-1,4,-1
+6,-34,26
+
+4. Testing inverse:
+
+inv(M) = 
+
+Matrix[3][3]:
+
+-0.1,1.4,-1.1
+-0.1,0.4,-0.1
+0.6,-3.4,2.6
+
+Test Completed.
+Matrix succesfully destroyed.
+Matrix succesfully destroyed.
+Matrix succesfully destroyed.
+Matrix succesfully destroyed.

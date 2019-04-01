@@ -1,6 +1,8 @@
 # DOCUMENTATION 
 
-Simple **Matrix template class** in C++ with a few general utilities and mathematical operations. The objective of this class is to have a structured matrix data type that can be added to any project and allows for easy data storing, carrying and accessing in matrix form, as well as performing algebraic calculations on such data. 
+Simple **Matrix template class** in C++ with a few general utilities and mathematical operations. The objective of this class is to have a structured matrix data type that can be added to any project, allowing easy data storing, carrying and accessing in matrix form, as well as performing algebraic calculations on such data.
+
+The Matrix Class **.h** and **.cpp** templates are in _include/_. The folder _src/_ contains source to test programs. The output of this tests can be seen in the .txt files in _genfiles/_ and used for checking that the class compiled fine.
 
 ## 1. Build and Compile
 
@@ -46,6 +48,25 @@ target_link_libraries(exec_name Matrix)
 ## 2. Description:
 
 ### 2.1. The Matrix class
+
+#### 2.1.2. Initialization
+
+**A. Constructor**
+
+ - `Matrix(int rows, int columns, const T& init);`
+
+Requires the number of rows and columns and an intial value to fill the matrix up. As it is a template, requires specifiying the data type inside the matrix:
+
+```c++
+// Initialization
+Matrix<int> M(2, 3, 0);
+```
+
+**B. Copy constructor**
+
+ - `Matrix(const Matrix<T>& A);`
+
+Requires another matrix as argument.
 
 ### 2.2. General Purpose Methods
 
@@ -96,6 +117,34 @@ Matrix[3][3]:
 
 Returns the element **M(row, col)**.
 
+ - `const T& operator()(const unsigned& row, const unsigned& col) const`
+
+Returns **const** element at the selected row and column.
+
+**B. Assignment operator.**
+ 
+ - `Matrix<T>& operator=(const Matrix<T>& A);`
+
+This operation is needed to produce new matrices resulting from the below operations (like C = A + B).  
+
+**C. Sum operator.**
+
+ - `Matrix<T> operator+(const Matrix<T>& A);`
+
+Sum of two matrices.
+
+**D. Substraction operator.**
+
+ -`Matrix<T> operator-(const Matrix<T>& A);`
+
+Substraction of two matrices.
+
+**E. Multiplication operator.**
+
+ -`Matrix<T> operator*(const Matrix<T>& A);` 
+
+Multiplication of two matrices.
+
 ### 2.4. Algebraic Operations
 
 #### 2.4.1. Matrix Multiplications
@@ -121,17 +170,72 @@ If the size of **a** and **b** do not match, returns a matrix of zeros and an er
  Returns the vector **y** resulting from the operation **y (1 x n) = x (1 x m) * H (m x n)**.
 If the size of **x** does not match with the number of rows in **H**, returns a vector of zeros and an error message.
 
-#### 2.4.2. Matrix Transformations
+#### 2.4.2. Numerical Operations.
 
-**A. Transpose.**
+**A. Determinant of the matrix.**
+
+ - `void getCoFactors(vector<vector<T> > array, vector<vector<T> >& temp, int size, int r, int c);` 
+
+Calculates co-factors at a given matrix position and stores them in a vector. 
+
+ - `T iterateDet(vector<vector<T> > array, int size);` 
+
+Performs the iteration over the several co-factors needed to get the determinant of the matrix.
+
+ - `T getDeterminant(int size);` 
+
+Calls both of the previous functions and returns the final value of the determinant. Returns error and an empty matrix if it is not square. See [this video](https://www.youtube.com/watch?v=KLaAE22fk60) for more details on how to calculate the determinant of a large matrix.
+
+**B. Multiplication of a matrix by a scalar.**
+
+ - `Matrix<T> scalarTimesMatrix(T scalar);`
+
+Returns a matrix resulting for multiplying a single scalar times itself. 
+Use it to perform scalar division as **Matrix * 1/scalar**.
+
+**B. Sum of a matrix by a scalar.**
+
+ - `Matrix<T> scalarPlusMatrix(T scalar);`
+
+Returns a matrix resulting for adding a single scalar to it. 
+
+**D. Substraction of a matrix by a scalar.**
+
+ - `Matrix<T> scalarMinusMatrix(T scalar);`
+
+Returns a matrix resulting for substracting a single scalar to it. 
+
+**E. Diagonal Vector.**
+
+ - `vector<T> diagonalVector();` 
+
+Returns a vector with the diagonal components of the square matrix. 
+
+#### 2.4.3. Matrix Transformations
+
+**A. Identity Matrix.**
+
+ - `Matrix<T> identity();`
+
+Returns the identity matrix of the size used to construct the matrix.
+
+**B. Transpose Matrix.**
 
  - `Matrix<T> transpose();`
 
 Returns the transpose of the original matrix.
 
-**B. Inverse.**
+**C. Adjoint Matrix.**
 
-_To be implemented_.
+ - `Matrix<T> adjoint();`
+
+Returns the adjoint matrix of the input one. Returns error and an empty matrix if it is not square. See more details about the adjoint matrix [here](https://en.wikipedia.org/wiki/Adjugate_matrix).
+
+**D. Inverse of the Matrix.**
+
+ - `Matrix<T> inverse();`
+
+Returns the inverse of the given matrix A: **inv(A) = adj(A) * 1/det(A)** . Returns error and an empty matrix if it is not square.
 
 ## AUTHOR
 
@@ -143,3 +247,4 @@ _To be implemented_.
 
  - [Math Insight](https://mathinsight.org/matrix_vector_multiplication).
  - [QuantStart](https://www.quantstart.com/articles/Matrix-Classes-in-C-The-Header-File)
+ - [Determinant](https://www.geeksforgeeks.org/determinant-of-a-matrix/) of large matrices.
