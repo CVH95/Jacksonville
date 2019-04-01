@@ -93,7 +93,9 @@ Returns the element at selected row and column.
 
 Updates the value of the element at the selected row and column.
 
-**D. Printing the matrix in the console.**
+#### 2.2.2. Other.
+
+**A. Printing the matrix in the console.**
 
  - `printMatrix();`
 
@@ -121,25 +123,27 @@ Returns the element **M(row, col)**.
 
 Returns **const** element at the selected row and column.
 
-**B. Assignment operator.**
+#### 2.3.2. Algebraic operators
+
+**A. Assignment operator.**
  
  - `Matrix<T>& operator=(const Matrix<T>& A);`
 
 This operation is needed to produce new matrices resulting from the below operations (like C = A + B).  
 
-**C. Sum operator.**
+**B. Sum operator.**
 
  - `Matrix<T> operator+(const Matrix<T>& A);`
 
 Sum of two matrices.
 
-**D. Substraction operator.**
+**C. Substraction operator.**
 
  -`Matrix<T> operator-(const Matrix<T>& A);`
 
 Substraction of two matrices.
 
-**E. Multiplication operator.**
+**D. Multiplication operator.**
 
  -`Matrix<T> operator*(const Matrix<T>& A);` 
 
