@@ -22,3 +22,7 @@ target_link_libraries(test_numerical Matrix)
 
 add_executable(test_operators src/test_operators.cpp)
 target_link_libraries(test_operators Matrix)
+
+# Build the command line matrix calculator
+add_executable(mat_calculator src/command_line_matrix_tool.cpp)
+target_link_libraries(mat_calculator Matrix)
