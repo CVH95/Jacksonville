@@ -241,9 +241,9 @@ Returns the adjoint matrix of the input one. Returns error and an empty matrix i
 
 Returns the inverse of the given matrix A: **inv(A) = adj(A) * 1/det(A)** . Returns error and an empty matrix if it is not square.
 
-#### 2.4.3. Upcoming features.
+#### 2.4.3. Latest features.
 
-**New methods for:**
+**New methods:**
 
   - Computation of rotation matrices from RPY angles.
   - Computation of RPY vectors from rotation matrices.
@@ -252,15 +252,14 @@ Returns the inverse of the given matrix A: **inv(A) = adj(A) * 1/det(A)** . Retu
   - Hadamard product between 2 matrices.
   - Hadamard product between 2 vectors.
 
-**Integration improvements:**
+**New tools:**
 
-  - Encapsulation of the matrix class under the namespace **matrixTemplateClass**.
-  - Install source from CMake, so that the package binary can be integrated in any project with `find_package()`.
+  - Command line tool for operations with RPY transform matrices.
 
 ## AUTHOR
 
  - Carlos Viescas.
- - cavie17@student.sdu.dk
+ - gitcvh95@gmail.com
  - MSc Robot Systems, University of Southern Denmark.
 
 ## REFERENCES
