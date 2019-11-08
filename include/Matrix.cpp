@@ -7,7 +7,6 @@
 
 #include "Matrix.h"
 
-
 // CONSTRUCTOR
 template<typename T>
 Matrix<T>::Matrix(int rows, int columns, const T& init)
@@ -23,9 +22,9 @@ Matrix<T>::Matrix(int rows, int columns, const T& init)
 }
 
 
-// COPY CONSTRUCTOR                                                                                                                                                           
+// COPY CONSTRUCTOR
 template<typename T>
-Matrix<T>::Matrix(const Matrix<T>& A) 
+Matrix<T>::Matrix(const Matrix<T>& A)
 {
     mat = A.mat;
     ROWS = A.getRows();
@@ -38,7 +37,7 @@ template<typename T>
 Matrix<T>::~Matrix()
 //Matrix::~Matrix()
 {
-    cout << "Matrix succesfully destroyed." << endl;
+    //cout << "Matrix succesfully destroyed." << endl;
 }
 
 
@@ -55,7 +54,7 @@ int Matrix<T>::getRows() const
 {
     return this->ROWS;
 }
-        
+
 // Get number of columns
 template<typename T>
 int Matrix<T>::getColumns() const
@@ -69,13 +68,13 @@ int Matrix<T>::getColumns() const
 template<typename T>
 void Matrix<T>::printMatrix()
 //void Matrix::printMatrix()
-{   
+{
     int r = getRows();
     int c = getColumns();
     int limit = c-1;
-    cout << "Matrix[" << r << "][" << c << "]:" << endl << endl; 
+    cout << "Matrix[" << r << "][" << c << "]:" << endl << endl;
     for(int i=0; i<r; i++)
-    {   
+    {
         for(int j=0; j<c; j++)
         {
             if(j == limit)
@@ -93,6 +92,19 @@ void Matrix<T>::printMatrix()
 }
 
 
+// Print vector
+template<typename T>
+void Matrix<T>::printVector(vector<T> vec)
+{
+    cout << "[" << vec[0];
+    for(int i=1; i<vec.size(); i++)
+    {
+        cout << ", " << vec[i];
+    }
+    cout << "]" << endl;
+}
+
+
 // Get individual element
 template<typename T>
 T& Matrix<T>::getElement(int row, int col)
@@ -101,7 +113,7 @@ T& Matrix<T>::getElement(int row, int col)
 }
 
 
-// Update individual value 
+// Update individual value
 template<typename T>
 void Matrix<T>::updateElement(int row, int col, T value)
 {
@@ -131,9 +143,9 @@ const T& Matrix<T>::operator()(const unsigned& row, const unsigned& col) const
 }
 
 
-// Assignment Operator                                                                                                                                                        
+// Assignment Operator
 template<typename T>
-Matrix<T>& Matrix<T>::operator=(const Matrix<T>& A) 
+Matrix<T>& Matrix<T>::operator=(const Matrix<T>& A)
 {
     if (&A == this)
         return *this;
@@ -162,13 +174,13 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T>& A)
 }
 
 
-// Sum of two matrices                                                                                                                                                   
+// Sum of two matrices
 template<typename T>
-Matrix<T> Matrix<T>::operator+(const Matrix<T>& A) 
+Matrix<T> Matrix<T>::operator+(const Matrix<T>& A)
 {
     Matrix result(ROWS, COLS, 0);
 
-    for (int i=0; i<ROWS; i++) 
+    for (int i=0; i<ROWS; i++)
     {
         for (int j=0; j<COLS; j++)
         {
@@ -181,13 +193,13 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T>& A)
 }
 
 
-// Subtraction of this matrix and another                                                                                                                                     
+// Subtraction of this matrix and another
 template<typename T>
 Matrix<T> Matrix<T>::operator-(const Matrix<T>& A)
 {
     Matrix result(ROWS, COLS, 0);
 
-    for (int i=0; i<ROWS; i++) 
+    for (int i=0; i<ROWS; i++)
     {
         for (int j=0; j<COLS; j++)
         {
@@ -200,13 +212,13 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T>& A)
 }
 
 
-// Multiplication of this matrix and another                                                                                                                                     
+// Multiplication of this matrix and another
 template<typename T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T>& A)
 {
     Matrix result(ROWS, COLS, 0);
 
-    for (int i=0; i<ROWS; i++) 
+    for (int i=0; i<ROWS; i++)
     {
         for (int j=0; j<COLS; j++)
         {
@@ -220,13 +232,62 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T>& A)
 }
 
 
+// Hadamard product of two vectors
+template<typename T>
+vector<T> Matrix<T>::vectorHadamardProduct(vector<T> a, vector<T> b)
+{
+    vector<T> result;
+    if(a.size() != b.size())
+    {
+        cout << "Vectors are not of the same size!!" << endl;
+        return result;
+    }
+    else
+    {
+        for(int i=0; i<a.size(); i++)
+        {
+            result.push_back(a[i]*b[i]);
+        }
+        return result;
+    }
+}
+
+template<typename T>
+Matrix<T> Matrix<T>::matrixHadamardProduct(Matrix<T> A, Matrix<T> B)
+{
+    Matrix<T> result;
+
+    // Check matrix sizes
+    int rows_a = A.getRows();
+    int rows_b = B.getRows();
+    int cols_a = A.getColumns();
+    int cols_b = B.getColumns();
+    if(rows_a != rows_b || cols_a != cols_b)
+    {
+        cout << "Matrices have different sizes" << endl;
+        return result;
+    }
+    else
+    {
+        for(int i=0; i<rows_a; i++)
+        {
+            for(int j=0; j<cols_a; j++)
+            {
+                T el = A.getElement(i, j)*B.getElement(i, j);
+                result.updateElement(i, j, el);
+            }
+        }
+        return result;
+    }
+}
+
 //----------------------------------------------------------------------------------------------------
 
 
 // ALGEBRA
 
 
-// Multiplication of a matrix A (m x n) by a vector v (n x 1) 
+// Multiplication of a matrix A (m x n) by a vector v (n x 1)
 template<typename T>
 vector<T> Matrix<T>::matrixByColumnVector(vector<T> vec)
 {
@@ -288,10 +349,10 @@ vector<T> Matrix<T>::rowVectorByMatrix(vector<T> vec)
 }
 
 
-// Multiplication of Column vector (m x 1) by a row vector (1 x m) 
+// Multiplication of Column vector (m x 1) by a row vector (1 x m)
 template<typename T>
 Matrix<T> Matrix<T>::columnVectorByRowVector(vector<T> a, vector<T> b)
-{   
+{
     Matrix<T> result(a.size(), b.size(), 0);
     if(a.size() == b.size())
     {
@@ -306,7 +367,7 @@ Matrix<T> Matrix<T>::columnVectorByRowVector(vector<T> a, vector<T> b)
             {
                 result.updateElement(i, j, a[i]*b[j]);
             }
-        } 
+        }
         return result;
     }
     else
@@ -325,7 +386,7 @@ template<typename T>
 void Matrix<T>::getCoFactors(vector<vector<T> > array, vector<vector<T> >& temp, int size, int r, int c)
 {
     int current_row = 0;
-    int current_col = 0;  
+    int current_col = 0;
 
     for(int i=0; i<size; i++)
     {
@@ -357,7 +418,7 @@ T Matrix<T>::iterateDet(vector<vector<T> > array, int size)
         return array[0][0]*array[1][1] - array[1][0]*array[0][1];
     }
 
-    // Initialize 
+    // Initialize
     vector<vector<T> > temp;
     temp.resize(size);
     for(int i=0; i<size; i++)
@@ -387,14 +448,14 @@ T Matrix<T>::getDeterminant(int size)
         cout << "ERROR: Matrix is not square!" << endl;
         return 0;
     }
-    
+
     vector<vector<T> > array;
     array.resize(size);
     for(int i=0; i<size; i++)
     {
         array[i].resize(size, 0);
     }
-    
+
     // Copy matrix to 2D array
     for(int i=0; i<ROWS; i++)
     {
@@ -580,22 +641,22 @@ Matrix<T> Matrix<T>::inverse()
 {
     Matrix inv(ROWS, COLS, 0);
     int size = ROWS;
-    
+
     if(ROWS != COLS)
     {
         cout << "ERROR: Matrix is not square!" << endl;
         return inv;
     }
-    
+
     T det = this->getDeterminant(size);
-    
+
     // Check for singular matrix
     if(det == 0)
     {
         cout << "ERROR: Singular matrix, not possible to compute its determinant" << endl;
         return inv;
     }
-    
+
     // Calculate adjoint
     Matrix adj(ROWS, COLS, 0);
     adj = this->adjoint();
@@ -611,6 +672,132 @@ Matrix<T> Matrix<T>::inverse()
         }
     }
     return inv;
+}
+
+
+// Get rotation matrix from RPY angles
+template<typename T>
+Matrix<T> Matrix<T>::getRotationMatrix(vector<T> rpy, bool radians)
+{
+    Matrix<T> rotation(3, 3, 0);
+
+    // Calculation
+    T sx, cx, sy, cy, sz, cz;
+    if(!radians)
+    {
+      	sx = sin(rpy[2]*PI/180);
+      	cx = cos(rpy[2]*PI/180);
+      	sy = sin(rpy[1]*PI/180);
+      	cy = cos(rpy[1]*PI/180);
+      	sz = sin(rpy[0]*PI/180);
+      	cz = cos(rpy[0]*PI/180);
+    }
+    else
+    {
+      sx = sin(rpy[2]);
+      cx = cos(rpy[2]);
+      sy = sin(rpy[1]);
+      cy = cos(rpy[1]);
+      sz = sin(rpy[0]);
+      cz = cos(rpy[0]);
+    }
+
+    // Composition of the rotation matrix
+  	rotation.updateElement(0, 0, cy*cz);
+    rotation.updateElement(0, 1, sx*sy*cz-cx*sz);
+    rotation.updateElement(0, 2, cx*sy*cz+sx*sz);
+    rotation.updateElement(1, 0, cy*sz);
+    rotation.updateElement(1, 1, sx*sy*sz+cx*cz);
+    rotation.updateElement(1, 2, cx*sy*sz-sx*cz);
+    rotation.updateElement(2, 0, -sy);
+    rotation.updateElement(2, 1, sx*cy);
+    rotation.updateElement(2, 2, cx*cy);
+
+    return rotation;
+}
+
+
+// For general consistency, always give xyz vector in meters.
+template<typename T>
+Matrix<T> Matrix<T>::getTransformMatrix(vector<T> xyz, vector<T> rpy, bool radians)
+{
+    Matrix<T> transform(4, 4, 0);
+
+    // Get rotation matrix
+    Matrix<T> rotation = getRotationMatrix(rpy, radians);
+
+    // Composition of the transfrom matrix
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            transform.updateElement(i, j, rotation.getElement(i, j));
+        }
+    }
+
+    transform.updateElement(0, 3, xyz[0]);
+    transform.updateElement(1, 3, xyz[1]);
+    transform.updateElement(2, 3, xyz[2]);
+    transform.updateElement(3, 3, 1);
+
+    return transform;
+}
+
+
+// Get the translation vector from a transform matrix
+template<typename T>
+vector<T> Matrix<T>::getTranslationVector(Matrix<T> transform_matrix)
+{
+    vector<T> xyz;
+
+    xyz.push_back(transform_matrix.getElement(0, 3));
+    xyz.push_back(transform_matrix.getElement(1, 3));
+    xyz.push_back(transform_matrix.getElement(2, 3));
+
+    return xyz;
+}
+
+
+// Get the RPY vector from a transform matrix
+template<typename T>
+vector<T> Matrix<T>::getRpyVector(Matrix<T> transform_matrix)
+{
+    vector<T> result;
+
+    // Extract rotation matrix
+    Matrix<T> rotation(3, 3, 0);
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            rotation.updateElement(i, j, transform_matrix.getElement(i, j));
+        }
+    }
+
+    // Get RPY angles
+    T sy = sqrt(rotation.getElement(0,0) * rotation.getElement(0,0) +  rotation.getElement(1,0) * rotation.getElement(1,0) );
+
+    bool singular = sy < 1e-6; // If
+
+    T x, y, z;
+    if (!singular)
+    {
+        x = atan2(rotation.getElement(2,1), rotation.getElement(2,2));
+        y = atan2(-rotation.getElement(2,0), sy);
+        z = atan2(rotation.getElement(1,0), rotation.getElement(0,0));
+    }
+    else
+    {
+        x = atan2(-rotation.getElement(1,2), rotation.getElement(1,1));
+        y = atan2(-rotation.getElement(2,0), sy);
+        z = 0;
+    }
+
+    result.push_back(x);
+    result.push_back(y);
+    result.push_back(z);
+
+    return result;
 }
 
 
